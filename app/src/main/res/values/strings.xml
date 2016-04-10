@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Movie Discover</string>
+    <string name="author">Zach</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_detail">Movie Details</string>
+    <string name="title_activity_content">More Content</string>
+    <string name="pref_enable_notifications_label">App Notification</string>
+    <string name="pref_enable_notifications_key">enable_notifications</string>
+    <string name="pref_enable_notifications_false">Not Enabled</string>
+    <string name="pref_enable_notifications_true">Enabled</string>
+    <string name="pref_enable_notifications_default">false</string>
+    <string name="pref_last_notification">last_notification</string>
+    <string name="action_share">Share</string>
+    <string name="pref_data_status_key">data_status</string>
+    <string name="empty_movie_list">No movie information available</string>
+    <string name="empty_movie_list_server_down">No movie information available:\n Server is not returning data.</string>
+    <string name="empty_movie_list_server_error">No movie information available:\n Server is not returning valid data.</string>
+    <string name="empty_movie_list_no_network">No movie information available:\n Network is not available.</string>
+    <string name="empty_movie_list_unknown_error">No movie information available:\n Unknown error.</string>
+    <string name="empty_rated_list">You have an empty rated movie list.</string>
+
+    <string name="about">The data of this app is achieved from \"The Movie Database (TMDb)\".</string>
+    <string name="pref_section_cache_key">section</string>
+    <string name="pref_page_cache_key">page</string>
+    <string name="email">Zachary07@gmail.com</string>
+
+</resources>

@@ -1,0 +1,65 @@
+package com.hystle.zach.moviediscover;
+
+public class Constants {
+    public static final String CHARTS = "charts";
+    public static final String THEATER = "theater";
+    public static final String PERSONS = "persons";
+    public static final String ADVANCED_SEARCH = "advanced_search";
+    public static final String MY_RATES = "my_rates";
+    public static final String SECTION = "section";
+    public static final String PAGE_POSITION = "page_position";
+    public static final int POPULAR = 0;
+    public static final int REVENUE = 1;
+    public static final int VOTE = 2;
+    public static final int NOW_PLAYING = 0;
+    public static final int UPCOMING = 1;
+    public static final String EXTRA_ID = "extra_id";
+    public static final String EXTRA_TITLE = "extra_title";
+    public static final String EXTRA_REVIEWS = "extra_reviews";
+    public static final String EXTRA_CAST_LIST = "extra_cast_list";
+    public static final String EXTRA_CAST = "extra_cast";
+    public static final String EXTRA_CAST_FLAG = "extra_cast_flag";
+
+    public static final float PICTURE_RATIO = 1.5f;
+
+    public static final String API_KEY = "api_key";
+    public static final String TMDB_BASE_URL_MOVIE = "http://api.themoviedb.org/3/movie/";
+    public static final String TMDB_BASE_URL_PERSON = "https://api.themoviedb.org/3/person";
+    public static final String TMDB_BASE_URL_DISCOVER_MOVIE = "http://api.themoviedb.org/3/discover/movie?";
+    public static final String TMDB_BASE_URL_IMAGE_W342 = "http://image.tmdb.org/t/p/w342/";
+    public static final String TMDB_BASE_URL_IMAGE_W185 = "http://image.tmdb.org/t/p/w185/";
+    public static final String TMDB_PAGE = "page";
+    public static final String TMDB_POPULAR = "popular";
+    public static final String TMDB_SORT_BY = "sort_by";
+    public static final String TMDB_SIMILAR = "similar";
+    public static final String TMDB_REVENUE_DESC = "revenue.desc";
+    public static final String TMDB_TOP_RATED = "top_rated";
+    public static final String TMDB_NOW_PLAYING = "now_playing";
+    public static final String TMDB_UPCOMING = "upcoming";
+    public static final String TMDB_RESULTS = "results";
+    public static final String TMDB_ID = "id";
+    public static final String TMDB_POSTER_PATH = "poster_path";
+    public static final String TMDB_ORIGINAL_TITLE = "original_title";
+    public static final String TMDB_RELEASE_DATE = "release_date";
+    public static final String TMDB_VOTE_AVERAGE = "vote_average";
+    public static final String TMDB_OVERVIEW = "overview";
+    public static final String TMDB_VOTE_COUNT = "vote_count";
+    public static final String TMDB_TRAILERS = "trailers";
+    public static final String TMDB_YOUTUBE = "youtube";
+    public static final String TMDB_SOURCE = "source";
+    public static final String TMDB_CASTS = "casts";
+    public static final String TMDB_CAST = "cast";
+    public static final String TMDB_NAME = "name";
+    public static final String TMDB_CHARACTER = "character";
+    public static final String TMDB_REVIEWS = "reviews";
+    public static final String TMDB_AUTHOR = "author";
+    public static final String TMDB_CONTENT = "content";
+    public static final String TMDB_MOVIE_CREDITS = "movie_credits";
+    public static final String TMDB_APPEND_TO_RESPONSE = "append_to_response";
+    public static final String TMDB_BIOGRAPHY = "biography";
+    public static final String TMDB_BIRTHDAY = "birthday";
+    public static final String TMDB_DEATHDAY = "deathday";
+    public static final String TMDB_PLACE_OF_BIRTH = "place_of_birth";
+    public static final String TMDB_PROFILE_PATH = "profile_path";
+    public static final String TMDB_KNOWN_FOR = "known_for";
+}
