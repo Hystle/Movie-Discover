@@ -7,15 +7,15 @@
         <item
             android:id="@+id/action_charts"
             android:icon="@drawable/ic_menu_charts"
-            android:title="Hot Charts"/>
+            android:title="@string/charts"/>
         <item
             android:id="@+id/action_in_theaters"
             android:icon="@drawable/ic_menu_theater"
-            android:title="In Theaters"/>
+            android:title="@string/theaters"/>
         <item
             android:id="@+id/action_popular_persons"
             android:icon="@drawable/ic_menu_popular_persons"
-            android:title="Hot Persons"/>
+            android:title="@string/celebs"/>
     </group>
 
     <group
@@ -24,39 +24,41 @@
         <item
             android:id="@+id/action_search"
             android:icon="@drawable/ic_menu_search"
-            android:title="Search" />
+            android:title="@string/search" />
         <!--
         <item
             android:id="@+id/action_advanced_search"
             android:icon="@drawable/ic_menu_advanced_search"
             android:title="Advanced Search" />
-    -->
     </group>
 
     <group
         android:id="@+id/menu_group_my_movies"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/action_rated"
-            android:icon="@drawable/ic_menu_rated_list"
-            android:title="My Rates" />
-        <item
             android:id="@+id/action_watch_list"
             android:icon="@drawable/ic_menu_watch_list"
-            android:title="Watch list" />
+            android:title="@string/watch_list" />
+    -->
+        <item
+            android:id="@+id/action_rated"
+            android:icon="@drawable/ic_menu_rated_list"
+            android:title="@string/my_rates" />
     </group>
 
     <group
         android:id="@+id/menu_group_others"
         android:checkableBehavior="none">
+        <!--
         <item
             android:id="@+id/action_rate_app"
             android:icon="@drawable/ic_menu_rate_app"
-            android:title="Rate This"/>
+            android:title="@string/rate_this"/>
+            -->
         <item
             android:id="@+id/action_feedback"
             android:icon="@drawable/ic_menu_feedback"
-            android:title="Feedback" />
+            android:title="@string/feedback" />
     </group>
 
 </menu>

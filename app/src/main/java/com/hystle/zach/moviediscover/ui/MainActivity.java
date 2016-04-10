@@ -2,6 +2,7 @@ package com.hystle.zach.moviediscover.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -79,11 +80,11 @@ public class MainActivity extends AppCompatActivity
                 mSection = Constants.THEATER;
                 break;
             case Constants.PERSONS:
-                mTitles = new String[]{"Hot Persons"};
+                mTitles = new String[]{getResources().getString(R.string.celebs)};
                 mSection = Constants.PERSONS;
                 break;
             case Constants.MY_RATES:
-                mTitles = new String[]{"My Rates"};
+                mTitles = new String[]{getResources().getString(R.string.my_rates)};
                 mSection = Constants.MY_RATES;
                 break;
         }
@@ -130,18 +131,31 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_rated:
                 switchSection(Constants.MY_RATES);
                 break;
-            case R.id.action_watch_list:
-                Toast.makeText(this, "action_watch_list", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_rate_app:
-                Toast.makeText(this, "action_rate_app", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.action_watch_list:
+//                Toast.makeText(this, "action_watch_list", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.action_rate_app:
+//                Toast.makeText(this, "action_rate_app", Toast.LENGTH_SHORT).show();
+//                break;
             case R.id.action_feedback:
-                Toast.makeText(this, "action_feedback", Toast.LENGTH_SHORT).show();
+                sendEmail();
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void sendEmail(){
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setType("message/rfc822");
+        emailIntent.setData(Uri.parse("mailto:" + "Zachary07@gmail.com"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback on Movie Discover");
+//        emailIntent.putExtra(Intent.EXTRA_TEXT, "My email's body");
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send Email Using..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(MainActivity.this, "No Email Clients Installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void switchSection(String section) {

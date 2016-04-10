@@ -45,7 +45,7 @@ public class MoviePagerAdapter extends FragmentStatePagerAdapter {
             case Constants.THEATER:
                 return mTitles[position];
             case Constants.PERSONS:
-                return "HOT PERSONS";
+                return "POPULAR CELEBRITIES";
             case Constants.MY_RATES:
                 return "MY RATED MOVIES";
             default:

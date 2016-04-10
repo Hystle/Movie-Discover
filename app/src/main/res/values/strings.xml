@@ -20,9 +20,17 @@
     <string name="empty_movie_list_unknown_error">No movie information available:\n Unknown error.</string>
     <string name="empty_rated_list">You have an empty rated movie list.</string>
 
-    <string name="about">The data of this app is achieved from \"The Movie Database (TMDb)\".</string>
+    <string name="about">This product uses the TMDb API, but is not endorsed or certified by TMDb: https://www.themoviedb.org/documentation/api/terms-of-use</string>
     <string name="pref_section_cache_key">section</string>
     <string name="pref_page_cache_key">page</string>
     <string name="email">Zachary07@gmail.com</string>
+    <string name="charts">Charts</string>
+    <string name="theaters">Theaters</string>
+    <string name="celebs">Celebs</string>
+    <string name="search">Search</string>
+    <string name="my_rates">My Rates</string>
+    <string name="watch_list">Watch list</string>
+    <string name="rate_this">Rate This</string>
+    <string name="feedback">Feedback</string>
 
 </resources>
