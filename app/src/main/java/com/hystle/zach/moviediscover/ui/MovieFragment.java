@@ -2,14 +2,17 @@ package com.hystle.zach.moviediscover.ui;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,9 +61,16 @@ public class MovieFragment extends Fragment
     private Context mContext;
     ArrayList<MovieInfo> mMoviesList = new ArrayList<>();
     ArrayList<PersonInfo> mPersonsList = new ArrayList<>();
+    private ContentResolver mResolver;
 
     private int mLastVisibleItem;
     private int mResponsePageNo = 1;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mResolver = mContext.getContentResolver();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,8 +136,7 @@ public class MovieFragment extends Fragment
      * Helper function to load data from local database
      */
     private void loadMyRatesFromDb() {
-        ContentResolver resolver = mContext.getContentResolver();
-        Cursor cursor = resolver.query(MovieContract.CONTENT_RATED_URI, null, null, null, null);
+        Cursor cursor = mResolver.query(MovieContract.CONTENT_RATED_URI, null, null, null, null);
         if(cursor != null && cursor.moveToFirst()) {
             // cursor has been moved to the 1st row at this point for empty check
             cursor.moveToPrevious();
@@ -352,23 +361,46 @@ public class MovieFragment extends Fragment
      */
     @Override
     public void onItemClick(View view, int position) {
-       if(!mSection.equals(Constants.PERSONS)) {
+        if(!mSection.equals(Constants.PERSONS)) {
             Intent intent = new Intent(mContext, DetailActivity.class);
             intent.putExtra(Constants.EXTRA_ID, mMoviesList.get(position).id);
             intent.putExtra(Constants.EXTRA_TITLE, mMoviesList.get(position).title);
             startActivity(intent);
         }else{
-           Intent intent = new Intent(mContext, CastActivity.class);
-           intent.putExtra(Constants.EXTRA_CAST, (mPersonsList.get(position)).id);
-           intent.putExtra(Constants.EXTRA_CAST_FLAG, Constants.EXTRA_CAST);
-           startActivity(intent);
-       }
+            Intent intent = new Intent(mContext, CastActivity.class);
+            intent.putExtra(Constants.EXTRA_CAST, (mPersonsList.get(position)).id);
+            intent.putExtra(Constants.EXTRA_CAST_FLAG, Constants.EXTRA_CAST);
+            startActivity(intent);
+        }
     }
 
     @Override
-    public void onItemLongClick(View view, int position) {
+    public void onItemLongClick(View view, final int position) {
+        if (mSection.equals(Constants.MY_RATES)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
+                    .setMessage("Do you want to delete this record?")
+                    .setTitle("Delete")
+                    .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteRatedMovieFromDb(position);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            builder.create().show();
+        }
     }
 
+    private void deleteRatedMovieFromDb(int position) {
+        mResolver.delete(MovieContract.CONTENT_RATED_URI, null, new String[]{mMoviesList.get(position).id});
+        loadMyRatesFromDb();
+        mRecyclerViewAdapter.notifyDataSetChanged();
+    }
     /**
      * save context object: better than getActivity()
      * @param context
