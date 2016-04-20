@@ -11,6 +11,11 @@
         <item>Upcoming</item>
     </string-array>
 
+    <string-array name="tab_titles_search">
+        <item>By Conditions</item>
+        <item>By Keywords</item>
+    </string-array>
+
     <string-array name="genre_array">
         <item>Any</item>
         <item>Action</item>

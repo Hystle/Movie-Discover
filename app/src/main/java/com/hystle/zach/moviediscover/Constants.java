@@ -4,7 +4,8 @@ public class Constants {
     public static final String CHARTS = "charts";
     public static final String THEATER = "theater";
     public static final String PERSONS = "persons";
-    public static final String ADVANCED_SEARCH = "advanced_search";
+    public static final String SEARCH_MOVIE = "condition_search";
+    public static final String KEYWORD_SEARCH = "keyword_search";
     public static final String MY_RATES = "my_rates";
     public static final String SECTION = "section";
     public static final String PAGE_POSITION = "page_position";
@@ -19,11 +20,14 @@ public class Constants {
     public static final String EXTRA_CAST_LIST = "extra_cast_list";
     public static final String EXTRA_CAST = "extra_cast";
     public static final String EXTRA_CAST_FLAG = "extra_cast_flag";
+    public static final String EXTRA_SEARCH_RESULT = "extra_search_result";
+    public static final String EXTRA_SEARCH_RESULT_FLAG = "extra_search_result_flag";
 
     public static final float PICTURE_RATIO = 1.5f;
 
     public static final String API_KEY = "api_key";
     public static final String TMDB_BASE_URL_MOVIE = "http://api.themoviedb.org/3/movie/";
+    public static final String TMDB_BASE_URL_SEARCH = "https://api.themoviedb.org/3/search";
     public static final String TMDB_BASE_URL_PERSON = "https://api.themoviedb.org/3/person";
     public static final String TMDB_BASE_URL_DISCOVER_MOVIE = "http://api.themoviedb.org/3/discover/movie?";
     public static final String TMDB_BASE_URL_IMAGE_W342 = "http://image.tmdb.org/t/p/w342/";
@@ -62,4 +66,7 @@ public class Constants {
     public static final String TMDB_PLACE_OF_BIRTH = "place_of_birth";
     public static final String TMDB_PROFILE_PATH = "profile_path";
     public static final String TMDB_KNOWN_FOR = "known_for";
+    public static final String TMDB_MOVIE = "movie";
+    public static final String TMDB_PERSON = "person";
+    public static final String TMDB_QUERY = "query";
 }

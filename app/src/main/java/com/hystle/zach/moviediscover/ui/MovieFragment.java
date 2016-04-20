@@ -93,7 +93,7 @@ public class MovieFragment extends Fragment
                 if(newState == RecyclerView.SCROLL_STATE_DRAGGING
                         && mLastVisibleItem + 1 == mRecyclerViewAdapter.getItemCount()){
                     if(!mSection.equals(Constants.MY_RATES)) {
-                        Snackbar.make(mRootView, "Loading More Movies...", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRootView, "Loading more...", Snackbar.LENGTH_SHORT).show();
                         mResponsePageNo ++;
                         loadMovieDataFromServer(mResponsePageNo);
                     }

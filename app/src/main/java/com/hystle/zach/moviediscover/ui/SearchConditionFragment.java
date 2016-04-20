@@ -1,20 +1,18 @@
 package com.hystle.zach.moviediscover.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +35,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class FinderActivity extends AppCompatActivity {
+public class SearchConditionFragment extends Fragment {
+    private View mRootView;
 
     private static final String NOT_SELECTED = "not_selected";
     private static final String DESC = "desc";
@@ -66,14 +65,19 @@ public class FinderActivity extends AppCompatActivity {
     private String mVoteAverage;
 
     ArrayList<MovieInfo> mMoviesList = new ArrayList<>();
-    FinderFragment fragment;
     private FrameLayout mFrameLayout;
-    private ScrollView scrollView;
+    private NestedScrollView mScrollView;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = inflater.inflate(R.layout.frag_search_condition, container, false);
+        return mRootView;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finder);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         // init views
         initViews();
@@ -132,172 +136,31 @@ public class FinderActivity extends AppCompatActivity {
                 sortorderSP.setSelection(0);
                 voteSB.setProgress(0);
                 voteTV.setText("");
-                if (fragment != null) {
-                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                }
             }
         });
     }
 
     private void initViews() {
-        genreSP = (Spinner) findViewById(R.id.spinner_genre);
-        startYearSP = (Spinner) findViewById(R.id.spinner_start_year);
-        endYearSP = (Spinner) findViewById(R.id.spinner_end_year);
-        voteSB = (SeekBar) findViewById(R.id.seekbar_vote_average);
-        voteTV = (TextView) findViewById(R.id.tv_frag_picker_vote_average);
-        sortbySP = (Spinner) findViewById(R.id.spinner_sort_by);
-        sortorderSP = (Spinner) findViewById(R.id.spinner_sort_order);
-        searchBT = (Button) findViewById(R.id.bt_frag_picker_search);
-        clearBT = (Button) findViewById(R.id.bt_frag_picker_clear);
+        genreSP = (Spinner) mRootView.findViewById(R.id.spinner_genre);
+        startYearSP = (Spinner) mRootView.findViewById(R.id.spinner_start_year);
+        endYearSP = (Spinner) mRootView.findViewById(R.id.spinner_end_year);
+        voteSB = (SeekBar) mRootView.findViewById(R.id.seekbar_vote_average);
+        voteTV = (TextView) mRootView.findViewById(R.id.tv_frag_picker_vote_average);
+        sortbySP = (Spinner) mRootView.findViewById(R.id.spinner_sort_by);
+        sortorderSP = (Spinner) mRootView.findViewById(R.id.spinner_sort_order);
+        searchBT = (Button) mRootView.findViewById(R.id.bt_frag_picker_search);
+        clearBT = (Button) mRootView.findViewById(R.id.bt_frag_picker_clear);
 
-        mFrameLayout = (FrameLayout) findViewById(R.id.fl_finder_activity);
-        scrollView = (ScrollView) findViewById(R.id.sv_activity_finder);
+        mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.fl_frag_search_condition);
+        mScrollView = (NestedScrollView) mRootView.findViewById(R.id.sv_frag_search_condition);
     }
 
     private void configSpinner(Spinner spinner, int arrayResId) {
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, arrayResId, R.layout.item_spinner);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), arrayResId, R.layout.item_spinner);
         adapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         spinner.setAdapter(adapter);
         spinner.setSelection(0);
         spinner.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * request data from server by applying conditions user made
-     */
-    private void getResultByConditions() {
-        Uri uri = buildUriByConditions();
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(
-                uri.toString(),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        getMovieDataFromJson(response);
-                        // pass moviesInfo to FinderFragment for display
-                        if(mMoviesList.size() != 0) {
-                            Utility.setDataStatus(FinderActivity.this, Utility.DATA_STATUS_OK);
-                            Bundle args = new Bundle();
-                            args.putSerializable("BUNDLE", mMoviesList);
-                            fragment = new FinderFragment();
-                            fragment.setArguments(args);
-
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.ll_activity_finder, fragment).commit();
-                        }else{
-                            Toast.makeText(FinderActivity.this, "Oops, please check your input", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Utility.handleErrorCases(FinderActivity.this, error);
-                        Utility.updateEmptyView(FinderActivity.this, scrollView, mFrameLayout);
-                    }
-                }
-        );
-        mQueue.add(request);
-    }
-
-    private void getMovieDataFromJson(String jsonStr) {
-        try {
-            JSONObject moviesObject = new JSONObject(jsonStr);
-            JSONArray moviesArray = moviesObject.getJSONArray(Constants.TMDB_RESULTS);
-
-            // remove last search results
-            mMoviesList.clear();
-            // get required data from JSON response
-            for(int i=0; i<moviesArray.length(); i++){
-                JSONObject movieObject = moviesArray.getJSONObject(i);
-
-                MovieInfo movieInfo = new MovieInfo();
-                movieInfo.id = movieObject.getString(Constants.TMDB_ID);
-                movieInfo.posterPath = movieObject.getString(Constants.TMDB_POSTER_PATH);
-                movieInfo.title = movieObject.getString(Constants.TMDB_ORIGINAL_TITLE);
-                movieInfo.date = movieObject.getString(Constants.TMDB_RELEASE_DATE);
-                movieInfo.vote = movieObject.getString(Constants.TMDB_VOTE_AVERAGE);
-                mMoviesList.add(movieInfo);
-            }
-        } catch (JSONException e) {
-            Utility.setDataStatus(FinderActivity.this, Utility.DATA_STATUS_SERVER_INVALID);
-            e.printStackTrace();
-        }
-    }
-
-    private Uri buildUriByConditions() {
-        final String GENRE = "with_genres";
-        final String START_YEAR = "primary_release_date.gte";
-        final String END_YEAR = "primary_release_date.lte";
-        final String VOTE_AVERAGE_GTE = "vote_average.gte";
-        final String SORT_BY = Constants.TMDB_SORT_BY;
-
-        final String POPULARITY_DESC = "popularity.desc";
-        final String POPULARITY_ASC = "popularity.asc";
-        final String RELEASE_DATE_DESC = "primary_release_date.desc";
-        final String RELEASE_DATE_ASC = "primary_release_date.asc";
-        final String REVENUE_DESC = "revenue.desc";
-        final String REVENUE_ASC = "revenue.asc";
-        final String ORIGINAL_TITLE_DESC = "original_title.desc";
-        final String ORIGINAL_TITLE_ASC = "original_title.asc";
-        final String VOTE_AVERAGE_DESC = "vote_average.desc";
-        final String VOTE_AVERAGE_ASC = "vote_average.asc";
-
-        Uri uri = Uri.parse(Constants.TMDB_BASE_URL_DISCOVER_MOVIE).buildUpon().build();
-
-        if(!mStartYear.equals(NOT_SELECTED)){
-            uri = uri.buildUpon().appendQueryParameter(START_YEAR, mStartYear).build();
-        }
-        if(!mEndYear.equals(NOT_SELECTED)){
-            uri = uri.buildUpon().appendQueryParameter(END_YEAR, mEndYear).build();
-        }
-        if(!mSortBy.equals(NOT_SELECTED)) {
-            switch (mSortBy) {
-                case POPULARITY:
-                    if (mSortOrder.equals(ASC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, POPULARITY_ASC).build();
-                    } else if (mSortOrder.equals(DESC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, POPULARITY_DESC).build();
-                    }
-                    break;
-                case REVENUE:
-                    if (mSortOrder.equals(ASC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, REVENUE_ASC).build();
-                    } else if (mSortOrder.equals(DESC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, REVENUE_DESC).build();
-                    }
-                    break;
-                case RELEASE_DATE:
-                    if (mSortOrder.equals(ASC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, RELEASE_DATE_ASC).build();
-                    } else if (mSortOrder.equals(DESC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, RELEASE_DATE_DESC).build();
-                    }
-                    break;
-                case ORIGINAL_TITLE:
-                    if (mSortOrder.equals(ASC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, ORIGINAL_TITLE_ASC).build();
-                    } else if (mSortOrder.equals(DESC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, ORIGINAL_TITLE_DESC).build();
-                    }
-                    break;
-                case VOTE_AVERAGE:
-                    if (mSortOrder.equals(ASC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, VOTE_AVERAGE_ASC).build();
-                    } else if (mSortOrder.equals(DESC)) {
-                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, VOTE_AVERAGE_DESC).build();
-                    }
-                    break;
-            }
-        }
-        if(mVoteAverage != null){
-            uri = uri.buildUpon().appendQueryParameter(VOTE_AVERAGE_GTE, mVoteAverage).build();
-        }
-        if(!mGenre.equals(NOT_SELECTED)){
-            uri = uri.buildUpon().appendQueryParameter(GENRE, mGenre).build();
-        }
-        uri = uri.buildUpon().appendQueryParameter(Constants.API_KEY, BuildConfig.API_KEY).build();
-        return  uri;
     }
 
     private void addSpinnerListener() {
@@ -507,31 +370,146 @@ public class FinderActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-        return true;
+    /**
+     * request data from server by applying conditions user made
+     */
+    private void getResultByConditions() {
+        RequestQueue mQueue = Volley.newRequestQueue(getActivity());
+        StringRequest request = new StringRequest(
+                buildUriByConditions(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        getMovieDataFromJson(response);
+                        // pass moviesInfo to FinderFragment for display
+                        if(mMoviesList.size() != 0) {
+                            Utility.setDataStatus(getActivity(), Utility.DATA_STATUS_OK);
+
+//                            Bundle args = new Bundle();
+//                            args.putSerializable("BUNDLE", mMoviesList);
+//                            fragment = new FinderFragment();
+//                            fragment.setArguments(args);
+//                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                            transaction.replace(R.id.ll_activity_finder, fragment).commit();
+
+                            Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+                            intent.putExtra(Constants.EXTRA_SEARCH_RESULT, mMoviesList);
+                            intent.putExtra(Constants.EXTRA_SEARCH_RESULT_FLAG, Constants.TMDB_MOVIE);
+                            startActivity(intent);
+
+                        }else{
+                            Toast.makeText(getActivity(), "Oops, please check your input", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Utility.handleErrorCases(getActivity(), error);
+                        Utility.updateEmptyView(getActivity(), mScrollView, mFrameLayout);
+                    }
+                }
+        );
+        mQueue.add(request);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (item.getItemId()){
-            case R.id.action_setting:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_about:
-                new AlertDialog.Builder(this)
-                        .setTitle("About")
-                        .setMessage(R.string.about)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).show();
-                return true;
+    private void getMovieDataFromJson(String jsonStr) {
+        try {
+            JSONObject moviesObject = new JSONObject(jsonStr);
+            JSONArray moviesArray = moviesObject.getJSONArray(Constants.TMDB_RESULTS);
+
+            // remove last search results
+            mMoviesList.clear();
+            // get required data from JSON response
+            for(int i=0; i<moviesArray.length(); i++){
+                JSONObject movieObject = moviesArray.getJSONObject(i);
+
+                MovieInfo movieInfo = new MovieInfo();
+                movieInfo.id = movieObject.getString(Constants.TMDB_ID);
+                movieInfo.posterPath = movieObject.getString(Constants.TMDB_POSTER_PATH);
+                movieInfo.title = movieObject.getString(Constants.TMDB_ORIGINAL_TITLE);
+                movieInfo.date = movieObject.getString(Constants.TMDB_RELEASE_DATE);
+                movieInfo.vote = movieObject.getString(Constants.TMDB_VOTE_AVERAGE);
+                mMoviesList.add(movieInfo);
+            }
+        } catch (JSONException e) {
+            Utility.setDataStatus(getActivity(), Utility.DATA_STATUS_SERVER_INVALID);
+            e.printStackTrace();
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    private String buildUriByConditions() {
+        final String GENRE = "with_genres";
+        final String START_YEAR = "primary_release_date.gte";
+        final String END_YEAR = "primary_release_date.lte";
+        final String VOTE_AVERAGE_GTE = "vote_average.gte";
+        final String SORT_BY = Constants.TMDB_SORT_BY;
+
+        final String POPULARITY_DESC = "popularity.desc";
+        final String POPULARITY_ASC = "popularity.asc";
+        final String RELEASE_DATE_DESC = "primary_release_date.desc";
+        final String RELEASE_DATE_ASC = "primary_release_date.asc";
+        final String REVENUE_DESC = "revenue.desc";
+        final String REVENUE_ASC = "revenue.asc";
+        final String ORIGINAL_TITLE_DESC = "original_title.desc";
+        final String ORIGINAL_TITLE_ASC = "original_title.asc";
+        final String VOTE_AVERAGE_DESC = "vote_average.desc";
+        final String VOTE_AVERAGE_ASC = "vote_average.asc";
+
+        Uri uri = Uri.parse(Constants.TMDB_BASE_URL_DISCOVER_MOVIE).buildUpon().build();
+
+        if(!mStartYear.equals(NOT_SELECTED)){
+            uri = uri.buildUpon().appendQueryParameter(START_YEAR, mStartYear).build();
+        }
+        if(!mEndYear.equals(NOT_SELECTED)){
+            uri = uri.buildUpon().appendQueryParameter(END_YEAR, mEndYear).build();
+        }
+        if(!mSortBy.equals(NOT_SELECTED)) {
+            switch (mSortBy) {
+                case POPULARITY:
+                    if (mSortOrder.equals(ASC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, POPULARITY_ASC).build();
+                    } else if (mSortOrder.equals(DESC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, POPULARITY_DESC).build();
+                    }
+                    break;
+                case REVENUE:
+                    if (mSortOrder.equals(ASC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, REVENUE_ASC).build();
+                    } else if (mSortOrder.equals(DESC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, REVENUE_DESC).build();
+                    }
+                    break;
+                case RELEASE_DATE:
+                    if (mSortOrder.equals(ASC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, RELEASE_DATE_ASC).build();
+                    } else if (mSortOrder.equals(DESC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, RELEASE_DATE_DESC).build();
+                    }
+                    break;
+                case ORIGINAL_TITLE:
+                    if (mSortOrder.equals(ASC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, ORIGINAL_TITLE_ASC).build();
+                    } else if (mSortOrder.equals(DESC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, ORIGINAL_TITLE_DESC).build();
+                    }
+                    break;
+                case VOTE_AVERAGE:
+                    if (mSortOrder.equals(ASC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, VOTE_AVERAGE_ASC).build();
+                    } else if (mSortOrder.equals(DESC)) {
+                        uri = uri.buildUpon().appendQueryParameter(SORT_BY, VOTE_AVERAGE_DESC).build();
+                    }
+                    break;
+            }
+        }
+        if(mVoteAverage != null){
+            uri = uri.buildUpon().appendQueryParameter(VOTE_AVERAGE_GTE, mVoteAverage).build();
+        }
+        if(!mGenre.equals(NOT_SELECTED)){
+            uri = uri.buildUpon().appendQueryParameter(GENRE, mGenre).build();
+        }
+        uri = uri.buildUpon().appendQueryParameter(Constants.API_KEY, BuildConfig.API_KEY).build();
+        return  uri.toString();
     }
 }

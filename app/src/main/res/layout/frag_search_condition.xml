@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fl_finder_activity"
+    android:id="@+id/fl_frag_search_condition"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/sv_activity_finder"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/sv_frag_search_condition"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/ll_activity_finder"
+            android:id="@+id/ll_frag_search_condition"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -140,8 +140,7 @@
                     android:textSize="14sp"
                     android:layout_marginLeft="4dp"
                     android:background="@color/colorAccent"/>
-
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </FrameLayout>

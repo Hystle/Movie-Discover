@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 return new GridViewHolder(cardView);
             case Constants.THEATER:
             case Constants.PERSONS:
-            case Constants.ADVANCED_SEARCH:
+            case Constants.SEARCH_MOVIE:
                 cardView = mLayoutInflater.inflate(R.layout.item_linear, parent, false);
                 return new LinearViewHolder(cardView);
         }
@@ -95,7 +95,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .placeholder(R.drawable.placeholder1)
                         .error(R.drawable.placeholder2)
                         .into(imageView);
-            }else if (mSection.equals(Constants.THEATER) || mSection.equals(Constants.ADVANCED_SEARCH)){
+            }else if (mSection.equals(Constants.THEATER) || mSection.equals(Constants.SEARCH_MOVIE)){
                 MovieInfo movieInfo = (MovieInfo) mList.get(position);
                 String posterUrl = Constants.TMDB_BASE_URL_IMAGE_W185 + movieInfo.posterPath;
                 final LinearViewHolder linearViewHolder = (LinearViewHolder) holder;

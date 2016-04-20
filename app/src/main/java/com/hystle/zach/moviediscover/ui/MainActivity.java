@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity
 
     private void initViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerlayout);
-        mToolbar = (Toolbar) findViewById(R.id.id_toolbar_main);
-        mTabLayout = (TabLayout) findViewById(R.id.id_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+        mToolbar = (Toolbar) findViewById(R.id.id_main_toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.id_main_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.id_main_viewpager);
         mNavigationView = (NavigationView) findViewById(R.id.id_navigationview);
     }
 
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity
                 switchSection(Constants.PERSONS);
                 break;
             case R.id.action_search:
-                startActivity(new Intent(this, FinderActivity.class));
+                startActivity(new Intent(this, SearchActivity.class));
                 break;
             case R.id.action_rated:
                 switchSection(Constants.MY_RATES);
