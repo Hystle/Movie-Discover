@@ -64,8 +64,8 @@ public class RecyclerCastAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         String posterUrl = Constants.TMDB_BASE_URL_IMAGE_W185 + mCastsList.get(position).profilePath;
         Glide.with(mContext)
                 .load(posterUrl)
-                .placeholder(R.drawable.placeholder2)
-                .error(R.drawable.placeholder3)
+                .placeholder(R.drawable.placeholder_loading)
+                .error(R.drawable.placeholder_error)
                 .into(linearViewHolder.posterIV);
     }
 

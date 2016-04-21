@@ -33,9 +33,9 @@
                 android:layout_centerInParent="true"/>
 
             <ImageView android:id="@+id/iv_frag_search_keyword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/delete"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_action_clear"
                 android:layout_alignRight="@id/et_frag_search_keyword"
                 android:layout_centerVertical="true"
                 android:paddingRight="16dp"

@@ -68,8 +68,8 @@ public class RecyclerDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             GridSimilarHolder gridViewHolder = (GridSimilarHolder) holder;
             Glide.with(mContext)
                     .load(posterUrl)
-                    .placeholder(R.drawable.placeholder1)
-                    .error(R.drawable.placeholder2)
+                    .placeholder(R.drawable.placeholder_loading)
+                    .error(R.drawable.placeholder_error)
                     .into(gridViewHolder.mImageView);
             TextView tv = gridViewHolder.mTextView;
             tv.setTextSize(13);

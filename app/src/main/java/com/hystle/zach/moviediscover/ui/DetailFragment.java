@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +49,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class DetailFragment extends Fragment implements RecyclerDetailAdapter.OnItemClickListener {
     private static final String NO_REVIEWS = "No reviews found";
@@ -82,6 +84,7 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
     private ContentResolver resolver;
     private String mId;
     private String mTitle;
+    private String mDate;
     private View mRootView;
     private float mOldRate;
     private String mPosterPath;
@@ -89,6 +92,8 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
     private ArrayList<MovieInfo> mMoviesList = new ArrayList<>();
     private ArrayList<ReviewInfo> mReviewsList = new ArrayList<>();
     private ArrayList<CastInfo> mCastsList = new ArrayList<>();
+
+    private Menu mMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,16 +163,18 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
             JSONObject movieObject = new JSONObject(response);
 
             // 1. date
-            String date = movieObject.getString(Constants.TMDB_RELEASE_DATE);
-            if (!date.equals("")) {
-                dateView.setText(Utility.formatDate(mContext, date));
+            mDate = movieObject.getString(Constants.TMDB_RELEASE_DATE);
+            if (!mDate.equals("")) {
+                dateView.setText(Utility.formatDate(mContext, mDate));
             }
+            MenuItem eventItem = mMenu.findItem(R.id.id_item_action_event);
+            eventItem.setIntent(createEventIntent());
 
             // 2. title
             mTitle = movieObject.getString(Constants.TMDB_ORIGINAL_TITLE);
-            String[] dateSplit = date.split("\\-");
+            String[] dateSplit = mDate.split("\\-");
             String titleStr = mTitle;
-            if (!date.equals("")){
+            if (!mDate.equals("")){
                 titleStr = titleStr + " (" + dateSplit[0] + ")";
             }
             titleView.setText(titleStr);
@@ -348,8 +355,8 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
                                 .intoBackground(titleView, GlidePalette.Swatch.RGB)
                                 .intoTextColor(titleView, GlidePalette.Swatch.BODY_TEXT_COLOR)
                 )
-                .placeholder(R.drawable.placeholder2)
-                .error(R.drawable.placeholder3)
+                .placeholder(R.drawable.placeholder_loading)
+                .error(R.drawable.placeholder_error)
                 .into(posterView);
     }
 
@@ -366,7 +373,11 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
             ImageView iv = new ImageView(mContext);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
             String profileUri = Constants.TMDB_BASE_URL_IMAGE_W185 + mCastsList.get(i).profilePath;
-            Glide.with(mContext).load(profileUri).placeholder(R.drawable.placeholder3).into(iv);
+            Glide.with(mContext)
+                    .load(profileUri)
+                    .placeholder(R.drawable.placeholder_loading)
+                    .error(R.drawable.placeholder_error)
+                    .into(iv);
 
             int widthDps = Utility.getCastWidth(mContext);
             int heightDps = (int)(widthDps * Constants.PICTURE_RATIO);
@@ -433,6 +444,7 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
                 startActivity(intent);
             }
         });
+
         return mRootView;
     }
 
@@ -573,10 +585,31 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_frag_detail, menu);
+        mMenu = menu;
         MenuItem shareItem = menu.findItem(R.id.id_item_action_share);
         shareItem.setIntent(createShareMovieIntent());
     }
 
+    private Intent createEventIntent() {
+        if (mDate != null && !mDate.equals("")) {
+            String[] array = mDate.split("\\-");
+            int year = Integer.parseInt(array[0]);
+            int month = Integer.parseInt(array[1]) - 1;
+            int day = Integer.parseInt(array[2]);
+            Calendar movieTime = Calendar.getInstance();
+            movieTime.set(year, month, day);
+
+            return new Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, movieTime.getTimeInMillis())
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, movieTime.getTimeInMillis())
+                    .putExtra(CalendarContract.Events.TITLE, "Movie - " + mTitle)
+                    .putExtra(CalendarContract.Events.DESCRIPTION, "Added by Movie Discover");
+
+        }
+        return null;
+    }
     private Intent createShareMovieIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);

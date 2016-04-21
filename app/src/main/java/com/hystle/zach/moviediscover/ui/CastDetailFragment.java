@@ -241,8 +241,8 @@ public class CastDetailFragment extends Fragment implements RecyclerDetailAdapte
                                     .intoBackground(nameTV, GlidePalette.Swatch.RGB)
                                     .intoTextColor(nameTV, GlidePalette.Swatch.BODY_TEXT_COLOR)
                     )
-                    .placeholder(R.drawable.placeholder2)
-                    .error(R.drawable.placeholder3)
+                    .placeholder(R.drawable.placeholder_loading)
+                    .error(R.drawable.placeholder_error)
                     .into(profileIV);
         } catch (JSONException e) {
             e.printStackTrace();

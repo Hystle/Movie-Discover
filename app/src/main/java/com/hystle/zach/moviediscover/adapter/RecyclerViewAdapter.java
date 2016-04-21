@@ -92,8 +92,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 imageView.setLayoutParams(ivParams);
                 Glide.with(mContext)
                         .load(posterUrl)
-                        .placeholder(R.drawable.placeholder1)
-                        .error(R.drawable.placeholder2)
+                        .placeholder(R.drawable.placeholder_loading)
+                        .error(R.drawable.placeholder_error)
                         .into(imageView);
             }else if (mSection.equals(Constants.THEATER) || mSection.equals(Constants.SEARCH_MOVIE)){
                 MovieInfo movieInfo = (MovieInfo) mList.get(position);
@@ -101,8 +101,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 final LinearViewHolder linearViewHolder = (LinearViewHolder) holder;
                 Glide.with(mContext)
                         .load(posterUrl)
-                        .placeholder(R.drawable.placeholder1)
-                        .error(R.drawable.placeholder2)
+                        .placeholder(R.drawable.placeholder_loading)
+                        .error(R.drawable.placeholder_error)
                         .into(linearViewHolder.posterIV);
                 linearViewHolder.headLineTV.setText(movieInfo.title);
                 linearViewHolder.contentTV.setText(Utility.formatDate(mContext, movieInfo.date));
@@ -118,8 +118,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 final LinearViewHolder linearViewHolder = (LinearViewHolder) holder;
                 Glide.with(mContext)
                         .load(posterUrl)
-                        .placeholder(R.drawable.placeholder1)
-                        .error(R.drawable.placeholder2)
+                        .placeholder(R.drawable.placeholder_loading)
+                        .error(R.drawable.placeholder_error)
                         .into(linearViewHolder.posterIV);
                 linearViewHolder.headLineTV.setText(personInfo.name);
 //                StringBuilder builder = new StringBuilder();
