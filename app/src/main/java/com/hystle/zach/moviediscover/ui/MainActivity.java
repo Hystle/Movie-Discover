@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity
                 mTitles = getResources().getStringArray(R.array.tab_titles_theaters);
                 mSection = Constants.THEATER;
                 break;
-            case Constants.PERSONS:
+            case Constants.CELEBS:
                 mTitles = new String[]{getResources().getString(R.string.celebs)};
-                mSection = Constants.PERSONS;
+                mSection = Constants.CELEBS;
                 break;
             case Constants.MY_RATES:
                 mTitles = new String[]{getResources().getString(R.string.my_rates)};
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity
                 switchSection(Constants.THEATER);
                 break;
             case R.id.action_popular_persons:
-                switchSection(Constants.PERSONS);
+                switchSection(Constants.CELEBS);
                 break;
             case R.id.action_search:
                 startActivity(new Intent(this, SearchActivity.class));
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        mToolbar.setTitle(mTitles[position]);
+        mToolbar.setTitle(mSection);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 cardView = mLayoutInflater.inflate(R.layout.item_grid, parent, false);
                 return new GridViewHolder(cardView);
             case Constants.THEATER:
-            case Constants.PERSONS:
+            case Constants.CELEBS:
             case Constants.SEARCH_MOVIE:
                 cardView = mLayoutInflater.inflate(R.layout.item_linear, parent, false);
                 return new LinearViewHolder(cardView);
@@ -112,7 +112,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     String voteStr =  vote + "/" + 10;
                     linearViewHolder.subContentTV.setText(voteStr);
                 }
-            }else if (mSection.equals(Constants.PERSONS)){
+            }else if (mSection.equals(Constants.CELEBS)){
                 PersonInfo personInfo = (PersonInfo) mList.get(position);
                 String posterUrl = Constants.TMDB_BASE_URL_IMAGE_W185 + personInfo.profilePath;
                 final LinearViewHolder linearViewHolder = (LinearViewHolder) holder;

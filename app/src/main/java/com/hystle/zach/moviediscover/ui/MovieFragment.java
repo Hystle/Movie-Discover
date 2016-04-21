@@ -120,7 +120,7 @@ public class MovieFragment extends Fragment
         switch(mSection){
             case Constants.CHARTS:
             case Constants.THEATER:
-            case Constants.PERSONS:
+            case Constants.CELEBS:
                 mQueue = Volley.newRequestQueue(mContext);
                 loadMovieDataFromServer(mResponsePageNo);
                 break;
@@ -181,7 +181,7 @@ public class MovieFragment extends Fragment
                             case Constants.THEATER:
                                 getMovieDataFromJson(response);
                                 break;
-                            case Constants.PERSONS:
+                            case Constants.CELEBS:
                                 getPersonDataFromJson(response);
                                 break;
                         }
@@ -250,7 +250,7 @@ public class MovieFragment extends Fragment
                 }
                 break;
             }
-            case Constants.PERSONS:{
+            case Constants.CELEBS:{
                 uri = Uri.parse(Constants.TMDB_BASE_URL_PERSON).buildUpon()
                         .appendPath(Constants.TMDB_POPULAR)
                         .appendQueryParameter(Constants.TMDB_PAGE, responsePageNo+"")
@@ -328,7 +328,7 @@ public class MovieFragment extends Fragment
                 mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
                 mRecyclerViewAdapter = new RecyclerViewAdapter(mContext, mSection, mPageNo, mMoviesList);
                 break;
-            case Constants.PERSONS:
+            case Constants.CELEBS:
                 mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
                 mRecyclerViewAdapter = new RecyclerViewAdapter(mContext, mSection, mPageNo, mPersonsList);
                 break;
@@ -345,7 +345,7 @@ public class MovieFragment extends Fragment
         switch(mSection){
             case Constants.CHARTS:
             case Constants.THEATER:
-            case Constants.PERSONS:
+            case Constants.CELEBS:
                 mResponsePageNo = 1;
                 loadMovieDataFromServer(mResponsePageNo);
                 break;
@@ -362,7 +362,7 @@ public class MovieFragment extends Fragment
      */
     @Override
     public void onItemClick(View view, int position) {
-        if(!mSection.equals(Constants.PERSONS)) {
+        if(!mSection.equals(Constants.CELEBS)) {
             Intent intent = new Intent(mContext, DetailActivity.class);
             intent.putExtra(Constants.EXTRA_ID, mMoviesList.get(position).id);
             startActivity(intent);

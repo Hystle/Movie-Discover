@@ -24,7 +24,7 @@ public class MoviePagerAdapter extends FragmentStatePagerAdapter {
         switch(mSection){
             case Constants.CHARTS:
             case Constants.THEATER:
-            case Constants.PERSONS:
+            case Constants.CELEBS:
             case Constants.MY_RATES: {
                 Bundle args = new Bundle();
                 args.putString(Constants.SECTION, mSection);
@@ -44,7 +44,7 @@ public class MoviePagerAdapter extends FragmentStatePagerAdapter {
             case Constants.CHARTS:
             case Constants.THEATER:
                 return mTitles[position];
-            case Constants.PERSONS:
+            case Constants.CELEBS:
                 return "POPULAR CELEBRITIES";
             case Constants.MY_RATES:
                 return "MY RATED MOVIES";

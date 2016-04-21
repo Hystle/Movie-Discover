@@ -1,12 +1,12 @@
 package com.hystle.zach.moviediscover;
 
 public class Constants {
-    public static final String CHARTS = "charts";
-    public static final String THEATER = "theater";
-    public static final String PERSONS = "persons";
+    public static final String CHARTS = "Charts";
+    public static final String THEATER = "Theater";
+    public static final String CELEBS = "Celebs";
     public static final String SEARCH_MOVIE = "condition_search";
     public static final String KEYWORD_SEARCH = "keyword_search";
-    public static final String MY_RATES = "my_rates";
+    public static final String MY_RATES = "My Rates";
     public static final String SECTION = "section";
     public static final String PAGE_POSITION = "page_position";
     public static final int POPULAR = 0;

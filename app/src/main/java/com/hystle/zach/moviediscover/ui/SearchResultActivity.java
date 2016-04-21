@@ -46,7 +46,7 @@ public class SearchResultActivity extends AppCompatActivity
                 recyclerView.setAdapter(searchMovieAdapter);
                 break;
             case Constants.TMDB_PERSON:
-                RecyclerViewAdapter searchPersonAdapter = new RecyclerViewAdapter(this, Constants.PERSONS, 0, mList);
+                RecyclerViewAdapter searchPersonAdapter = new RecyclerViewAdapter(this, Constants.CELEBS, 0, mList);
                 searchPersonAdapter.setOnItemClickListener(this);
                 recyclerView.setAdapter(searchPersonAdapter);
         }
