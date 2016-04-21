@@ -39,8 +39,9 @@
                 app:layout_gravity="fill_horizontal"
                 android:textSize="20sp"
                 android:textColor="@android:color/primary_text_light"
-                android:paddingTop="6dp"
-                android:layout_marginLeft="12dp" />
+                android:layout_marginLeft="12dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="6dp"/>
 
             <TextView android:id="@+id/tv_item_linear_sub"
                 android:layout_width="wrap_content"

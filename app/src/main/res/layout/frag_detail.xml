@@ -45,8 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text="My Rate"
                     android:textColor="@android:color/primary_text_light"
-                    android:textSize="18sp"
-                    android:paddingTop="32dp"/>
+                    android:textSize="18sp"/>
 
                 <RatingBar
                     style="?android:attr/ratingBarStyleSmall"
@@ -105,8 +104,6 @@
                     android:textSize="16sp"
                     android:layout_below="@id/id_frag_detail_release_date"
                     android:layout_alignLeft="@+id/rating_bar"/>
-
-
             </RelativeLayout>
         </LinearLayout>
 

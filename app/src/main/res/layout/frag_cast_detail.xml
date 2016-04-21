@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -31,22 +31,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center">
+                android:padding="12dp">
 
                 <ImageView
                     android:id="@+id/iv_frag_cast_detail_poster"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="240dp" />
-
-                <LinearLayout
                     android:layout_weight="3"
+                    android:layout_height="200dp" />
+
+                <RelativeLayout
+                    android:layout_weight="5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:paddingLeft="56dp">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/id_frag_cast_detail_birthday"
@@ -54,13 +52,16 @@
                         android:layout_height="wrap_content"
                         android:text="Birthday"
                         android:textColor="@android:color/primary_text_light"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:layout_marginLeft="12dp"/>
 
                     <TextView
                         android:id="@+id/tv_frag_cast_detail_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:layout_below="@id/id_frag_cast_detail_birthday"
+                        android:layout_alignLeft="@id/id_frag_cast_detail_birthday"/>
 
                     <TextView
                         android:id="@+id/id_frag_cast_detail_birthplace"
@@ -69,13 +70,17 @@
                         android:text="Birthplace"
                         android:textColor="@android:color/primary_text_light"
                         android:textSize="18sp"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@id/tv_frag_cast_detail_birthday"
+                        android:layout_alignLeft="@id/id_frag_cast_detail_birthday"/>
 
                     <TextView
                         android:id="@+id/tv_frag_cast_detail_birthplace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:layout_below="@id/id_frag_cast_detail_birthplace"
+                        android:layout_alignLeft="@id/id_frag_cast_detail_birthday" />
 
                     <TextView
                         android:id="@+id/id_frag_cast_detail_deathday"
@@ -85,16 +90,19 @@
                         android:textColor="@android:color/primary_text_light"
                         android:textSize="18sp"
                         android:layout_marginTop="8dp"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:layout_below="@id/tv_frag_cast_detail_birthplace"
+                        android:layout_alignLeft="@id/id_frag_cast_detail_birthday"/>
 
                     <TextView
                         android:id="@+id/tv_frag_cast_detail_deathday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
+                        android:visibility="gone"
+                        android:layout_below="@id/id_frag_cast_detail_deathday"
+                        android:layout_alignLeft="@id/id_frag_cast_detail_birthday"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <ImageView
@@ -177,5 +185,5 @@
                 android:paddingBottom="8dp"/>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </FrameLayout>
