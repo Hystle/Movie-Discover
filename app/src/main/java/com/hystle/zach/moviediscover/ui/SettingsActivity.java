@@ -101,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.app_icon_64)
                             .setContentTitle("Movie Wander")
-                            .setContentText("Click here back to MovieWander");
+                            .setContentText("Click here back to Movie Discover");
             // Creates an explicit intent for an Activity in your app
             Intent resultIntent = new Intent(this, MainActivity.class);
             // The stack builder object will contain an artificial back stack for the
