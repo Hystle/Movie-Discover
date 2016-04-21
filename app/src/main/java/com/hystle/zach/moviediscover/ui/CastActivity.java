@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.hystle.zach.moviediscover.Constants;
 import com.hystle.zach.moviediscover.R;
-import com.hystle.zach.moviediscover.entity.CastInfo;
+import com.hystle.zach.moviediscover.entity.PersonInfo;
 
 import java.util.ArrayList;
 
@@ -30,8 +30,8 @@ public class CastActivity extends AppCompatActivity {
                         .commit();
                 break;
             case Constants.EXTRA_CAST_LIST:
-                ArrayList<CastInfo> castsList
-                        = (ArrayList<CastInfo>) getIntent().getSerializableExtra(Constants.EXTRA_CAST_LIST);
+                ArrayList<PersonInfo> castsList
+                        = (ArrayList<PersonInfo>) getIntent().getSerializableExtra(Constants.EXTRA_CAST_LIST);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fl_activity_cast, CastListFragment.newInstance(castsList))
                         .commit();

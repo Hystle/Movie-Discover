@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.hystle.zach.moviediscover.Constants;
 import com.hystle.zach.moviediscover.R;
-import com.hystle.zach.moviediscover.entity.CastInfo;
+import com.hystle.zach.moviediscover.entity.PersonInfo;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class RecyclerCastAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private Context mContext;
-    private ArrayList<CastInfo> mCastsList;
+    private ArrayList<PersonInfo> mCastsList;
 
     public RecyclerCastAdapter(Context context, ArrayList castsList){
         this.mContext = context;

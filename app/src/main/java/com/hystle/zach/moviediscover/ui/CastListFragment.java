@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.hystle.zach.moviediscover.Constants;
 import com.hystle.zach.moviediscover.R;
 import com.hystle.zach.moviediscover.adapter.RecyclerCastAdapter;
-import com.hystle.zach.moviediscover.entity.CastInfo;
+import com.hystle.zach.moviediscover.entity.PersonInfo;
 
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public class CastListFragment extends Fragment implements RecyclerCastAdapter.On
     @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(mContext, CastActivity.class);
-        intent.putExtra(Constants.EXTRA_CAST, ((CastInfo)castsList.get(position)).id);
+        intent.putExtra(Constants.EXTRA_CAST, ((PersonInfo)castsList.get(position)).id);
         intent.putExtra(Constants.EXTRA_CAST_FLAG, Constants.EXTRA_CAST);
         startActivity(intent);
     }

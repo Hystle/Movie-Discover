@@ -40,8 +40,8 @@ import com.hystle.zach.moviediscover.R;
 import com.hystle.zach.moviediscover.Utility;
 import com.hystle.zach.moviediscover.adapter.RecyclerDetailAdapter;
 import com.hystle.zach.moviediscover.data.MovieContract;
-import com.hystle.zach.moviediscover.entity.CastInfo;
 import com.hystle.zach.moviediscover.entity.MovieInfo;
+import com.hystle.zach.moviediscover.entity.PersonInfo;
 import com.hystle.zach.moviediscover.entity.ReviewInfo;
 
 import org.json.JSONArray;
@@ -91,7 +91,7 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
 
     private ArrayList<MovieInfo> mMoviesList = new ArrayList<>();
     private ArrayList<ReviewInfo> mReviewsList = new ArrayList<>();
-    private ArrayList<CastInfo> mCastsList = new ArrayList<>();
+    private ArrayList<PersonInfo> mCastsList = new ArrayList<>();
 
     private Menu mMenu;
 
@@ -231,12 +231,12 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
             if(castArray.length() != 0) {
                 for (int i = 0; i < castArray.length(); i++) {
                     JSONObject review = castArray.getJSONObject(i);
-                    CastInfo castInfo = new CastInfo();
-                    castInfo.id = review.getString(Constants.TMDB_ID);
-                    castInfo.name = review.getString(Constants.TMDB_NAME);
-                    castInfo.character = review.getString(Constants.TMDB_CHARACTER);
-                    castInfo.profilePath = review.getString(Constants.TMDB_PROFILE_PATH);
-                    mCastsList.add(castInfo);
+                    PersonInfo personInfo = new PersonInfo();
+                    personInfo.id = review.getString(Constants.TMDB_ID);
+                    personInfo.name = review.getString(Constants.TMDB_NAME);
+                    personInfo.character = review.getString(Constants.TMDB_CHARACTER);
+                    personInfo.profilePath = review.getString(Constants.TMDB_PROFILE_PATH);
+                    mCastsList.add(personInfo);
                 }
                 // set cast
                 final int CAST_LIMIT = 3;
