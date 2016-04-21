@@ -15,7 +15,6 @@ public class Constants {
     public static final int NOW_PLAYING = 0;
     public static final int UPCOMING = 1;
     public static final String EXTRA_ID = "extra_id";
-    public static final String EXTRA_TITLE = "extra_title";
     public static final String EXTRA_REVIEWS = "extra_reviews";
     public static final String EXTRA_CAST_LIST = "extra_cast_list";
     public static final String EXTRA_CAST = "extra_cast";

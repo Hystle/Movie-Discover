@@ -104,8 +104,6 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
         // based on the movie's Id to get other detail information
         Intent intent = getActivity().getIntent();
         mId = intent.getStringExtra(Constants.EXTRA_ID);
-        // save title for share function text
-        mTitle = intent.getStringExtra(Constants.EXTRA_TITLE);
         // prepare a Volley RequestQueue
         mQueue = Volley.newRequestQueue(mContext);
         // load data
@@ -163,6 +161,7 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
             JSONObject movieObject = new JSONObject(response);
 
             // 1. date
+            mTitle = movieObject.getString(Constants.TMDB_ORIGINAL_TITLE);
             mDate = movieObject.getString(Constants.TMDB_RELEASE_DATE);
             if (!mDate.equals("")) {
                 dateView.setText(Utility.formatDate(mContext, mDate));
@@ -171,13 +170,14 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
             eventItem.setIntent(createEventIntent());
 
             // 2. title
-            mTitle = movieObject.getString(Constants.TMDB_ORIGINAL_TITLE);
             String[] dateSplit = mDate.split("\\-");
             String titleStr = mTitle;
             if (!mDate.equals("")){
                 titleStr = titleStr + " (" + dateSplit[0] + ")";
             }
             titleView.setText(titleStr);
+            MenuItem shareItem = mMenu.findItem(R.id.id_item_action_share);
+            shareItem.setIntent(createShareMovieIntent());
 
             // 3. poster
             mPosterPath = movieObject.getString(Constants.TMDB_POSTER_PATH);
@@ -575,7 +575,6 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(mContext, DetailActivity.class);
         intent.putExtra(Constants.EXTRA_ID, mMoviesList.get(position).id);
-        intent.putExtra(Constants.EXTRA_TITLE, mMoviesList.get(position).title);
         startActivity(intent);
     }
 
@@ -586,8 +585,6 @@ public class DetailFragment extends Fragment implements RecyclerDetailAdapter.On
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_frag_detail, menu);
         mMenu = menu;
-        MenuItem shareItem = menu.findItem(R.id.id_item_action_share);
-        shareItem.setIntent(createShareMovieIntent());
     }
 
     private Intent createEventIntent() {

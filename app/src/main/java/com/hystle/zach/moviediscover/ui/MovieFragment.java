@@ -345,6 +345,7 @@ public class MovieFragment extends Fragment
         switch(mSection){
             case Constants.CHARTS:
             case Constants.THEATER:
+            case Constants.PERSONS:
                 mResponsePageNo = 1;
                 loadMovieDataFromServer(mResponsePageNo);
                 break;
@@ -364,7 +365,6 @@ public class MovieFragment extends Fragment
         if(!mSection.equals(Constants.PERSONS)) {
             Intent intent = new Intent(mContext, DetailActivity.class);
             intent.putExtra(Constants.EXTRA_ID, mMoviesList.get(position).id);
-            intent.putExtra(Constants.EXTRA_TITLE, mMoviesList.get(position).title);
             startActivity(intent);
         }else{
             Intent intent = new Intent(mContext, CastActivity.class);

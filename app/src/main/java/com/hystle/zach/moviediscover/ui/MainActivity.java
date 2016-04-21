@@ -1,5 +1,6 @@
 package com.hystle.zach.moviediscover.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -131,18 +132,25 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_rated:
                 switchSection(Constants.MY_RATES);
                 break;
-//            case R.id.action_watch_list:
-//                Toast.makeText(this, "action_watch_list", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.action_rate_app:
-//                Toast.makeText(this, "action_rate_app", Toast.LENGTH_SHORT).show();
-//                break;
+            case R.id.action_rate_app:
+                launchMarket();
+                break;
             case R.id.action_feedback:
                 sendEmail();
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void launchMarket() {
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(myAppLinkToMarket);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void sendEmail(){

@@ -280,7 +280,6 @@ public class CastDetailFragment extends Fragment implements RecyclerDetailAdapte
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(mContext, DetailActivity.class);
         intent.putExtra(Constants.EXTRA_ID, mMoviesList.get(position).id);
-        intent.putExtra(Constants.EXTRA_TITLE, mMoviesList.get(position).title);
         startActivity(intent);
     }
 

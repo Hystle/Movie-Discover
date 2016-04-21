@@ -60,7 +60,6 @@ public class SearchResultActivity extends AppCompatActivity
                 intent = new Intent(this, DetailActivity.class);
                 MovieInfo movieInfo = (MovieInfo) mList.get(position);
                 intent.putExtra(Constants.EXTRA_ID, movieInfo.id);
-                intent.putExtra(Constants.EXTRA_TITLE, movieInfo.title);
                 startActivity(intent);
                 break;
             case Constants.TMDB_PERSON:
