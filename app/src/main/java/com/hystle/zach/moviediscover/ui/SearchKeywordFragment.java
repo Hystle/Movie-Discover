@@ -188,6 +188,12 @@ public class SearchKeywordFragment extends Fragment {
                 movieInfo.title = movieObject.getString(Constants.TMDB_ORIGINAL_TITLE);
                 movieInfo.date = movieObject.getString(Constants.TMDB_RELEASE_DATE);
                 movieInfo.vote = movieObject.getString(Constants.TMDB_VOTE_AVERAGE);
+
+                JSONArray genreArray = movieObject.getJSONArray(Constants.TMDB_GENRE_IDS);
+                if (genreArray.length() != 0) {
+                    movieInfo.genre = genreArray.get(0).toString();
+                }
+
                 mList.add(movieInfo);
             }
         } catch (JSONException e) {

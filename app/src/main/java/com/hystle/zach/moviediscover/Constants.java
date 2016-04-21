@@ -68,4 +68,5 @@ public class Constants {
     public static final String TMDB_MOVIE = "movie";
     public static final String TMDB_PERSON = "person";
     public static final String TMDB_QUERY = "query";
+    public static final String TMDB_GENRE_IDS = "genre_ids";
 }

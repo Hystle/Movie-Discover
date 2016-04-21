@@ -385,13 +385,6 @@ public class SearchConditionFragment extends Fragment {
                         if(mMoviesList.size() != 0) {
                             Utility.setDataStatus(getActivity(), Utility.DATA_STATUS_OK);
 
-//                            Bundle args = new Bundle();
-//                            args.putSerializable("BUNDLE", mMoviesList);
-//                            fragment = new FinderFragment();
-//                            fragment.setArguments(args);
-//                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                            transaction.replace(R.id.ll_activity_finder, fragment).commit();
-
                             Intent intent = new Intent(getActivity(), SearchResultActivity.class);
                             intent.putExtra(Constants.EXTRA_SEARCH_RESULT, mMoviesList);
                             intent.putExtra(Constants.EXTRA_SEARCH_RESULT_FLAG, Constants.TMDB_MOVIE);
@@ -430,6 +423,12 @@ public class SearchConditionFragment extends Fragment {
                 movieInfo.title = movieObject.getString(Constants.TMDB_ORIGINAL_TITLE);
                 movieInfo.date = movieObject.getString(Constants.TMDB_RELEASE_DATE);
                 movieInfo.vote = movieObject.getString(Constants.TMDB_VOTE_AVERAGE);
+
+                JSONArray genreArray = movieObject.getJSONArray(Constants.TMDB_GENRE_IDS);
+                if (genreArray.length() != 0) {
+                    movieInfo.genre = genreArray.get(0).toString();
+                }
+
                 mMoviesList.add(movieInfo);
             }
         } catch (JSONException e) {

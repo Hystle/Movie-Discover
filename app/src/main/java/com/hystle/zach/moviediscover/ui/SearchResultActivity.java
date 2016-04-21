@@ -38,19 +38,22 @@ public class SearchResultActivity extends AppCompatActivity
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        final RecyclerViewAdapter adapter;
         switch(FLAG){
             case Constants.TMDB_MOVIE:
-                RecyclerViewAdapter searchMovieAdapter
-                        = new RecyclerViewAdapter(this, Constants.SEARCH_MOVIE, 0, mList);
-                searchMovieAdapter.setOnItemClickListener(this);
-                recyclerView.setAdapter(searchMovieAdapter);
+                adapter = new RecyclerViewAdapter(this, Constants.SEARCH_MOVIE, 0, mList);
                 break;
             case Constants.TMDB_PERSON:
-                RecyclerViewAdapter searchPersonAdapter = new RecyclerViewAdapter(this, Constants.CELEBS, 0, mList);
-                searchPersonAdapter.setOnItemClickListener(this);
-                recyclerView.setAdapter(searchPersonAdapter);
+                adapter = new RecyclerViewAdapter(this, Constants.CELEBS, 0, mList);
+                break;
+            default:
+                adapter = new RecyclerViewAdapter(this, Constants.SEARCH_MOVIE, 0, mList);
+                break;
         }
+        adapter.setOnItemClickListener(this);
+        recyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void onItemClick(View view, int position) {

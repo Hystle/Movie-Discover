@@ -8,4 +8,5 @@ public class MovieInfo implements Serializable{
     public String posterPath;
     public String date;
     public String vote;
+    public String genre;
 }

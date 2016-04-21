@@ -1,6 +1,7 @@
 package com.hystle.zach.moviediscover.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,12 +106,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .error(R.drawable.placeholder_error)
                         .into(linearViewHolder.posterIV);
                 linearViewHolder.headLineTV.setText(movieInfo.title);
-                linearViewHolder.contentTV.setText(Utility.formatDate(mContext, movieInfo.date));
+                linearViewHolder.contentTV.setText(Utility.getGenreNameById(movieInfo.genre));
+                linearViewHolder.subContentTV.setText(Utility.formatDate(mContext, movieInfo.date));
 
                 String vote = movieInfo.vote;
                 if(!vote.equals("0")){
-                    String voteStr =  vote + "/" + 10;
-                    linearViewHolder.subContentTV.setText(voteStr);
+                    linearViewHolder.maxRateTV.setText(R.string.item_linear_max_rate);
+                    linearViewHolder.rateTV.setTextColor(getColorByVote(vote));
+                    linearViewHolder.rateTV.setText(vote);
                 }
             }else if (mSection.equals(Constants.CELEBS)){
                 PersonInfo personInfo = (PersonInfo) mList.get(position);
@@ -132,6 +135,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
     }
+
+    private int getColorByVote(String string) {
+        float vote = Float.parseFloat(string);
+        if (vote < 4){
+            return Color.LTGRAY;
+        }else if(vote < 5) {
+            return Color.GRAY;
+        }else if(vote < 6){
+            return Color.BLACK;
+        }else if (vote < 7){
+            return Color.BLUE;
+        }else if (vote < 8){
+            return Color.CYAN;
+        }else if (vote < 9){
+            return Color.MAGENTA;
+        }else{
+            return Color.RED;
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mList.size();

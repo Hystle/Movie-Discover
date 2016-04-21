@@ -34,5 +34,6 @@
     <string name="feedback">Feedback</string>
     <string name="title_activity_search_result">Search Results</string>
     <string name="action_event">Add Event</string>
+    <string name="item_linear_max_rate">/10</string>
 
 </resources>
